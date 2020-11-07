@@ -1,22 +1,46 @@
 import React from "react"
-import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
+import TreksList from "../components/treksList"
 
-const IndexPage = () => (
+const IndexPage = ({ data }) => (
   <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
+    <SEO title="List of treks in himalayas" />
+    <TreksList treks={ data.allTreksJson } />
   </Layout>
 )
+
+export const pageQuery = graphql`
+query TreksIndexQuery {
+  allTreksJson {
+    totalCount
+    nodes {
+      id
+      trek_id
+      slug
+      airport_distance
+      attractions
+      best_season_time
+      description
+      difficulty_level
+      header_img_url
+      max_altitude
+      name
+      nearest_motorable_location
+      near_airport
+      nearest_railway
+      railway_code
+      railway_distance
+      state_id
+      state_name
+      temp_range
+      summit_point
+      time_duration
+    }
+  }
+}
+
+`
 
 export default IndexPage
