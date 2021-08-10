@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/trek-in-himalayas",
   siteMetadata: {
     title: `TrekkinHimalyas`,
     description: `List of treks in himalayas`,
@@ -7,6 +8,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-catch-links`,
+    `gatsby-transformer-json`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -26,9 +28,6 @@ module.exports = {
       options: {
         name: 'treks',
         path: `${__dirname}/treks.json`,
-        plugins: [
-          `gatsby-transformer-json`
-        ]
       }
     },
     `gatsby-transformer-remark`,
