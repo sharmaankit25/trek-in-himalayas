@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{VAXF:function(e,n,t){"use strict";t.r(n),t.d(n,"default",(function(){return u}));var a=t("q1tI"),l=t.n(a);function u(){return l.a.createElement("div",null,l.a.createElement("h1",null,"About Trekkin Himalayas"),l.a.createElement("p",null,"Welcome to your new Gatsby site."),l.a.createElement("p",null,"Now go build something great."))}}}]);
+//# sourceMappingURL=component---src-pages-treks-js-fbb848e5d13e32f2d089.js.map
