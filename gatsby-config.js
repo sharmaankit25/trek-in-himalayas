@@ -9,6 +9,7 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-catch-links`,
     `gatsby-transformer-json`,
+    `gatsby-plugin-antd`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

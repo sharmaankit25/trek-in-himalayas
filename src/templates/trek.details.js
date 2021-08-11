@@ -3,12 +3,13 @@ import Link from 'gatsby-link'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { Button } from 'antd'
 
 export default function Template({ data }) {
     return (
         <Layout>
             <SEO title={ data.treksJson.name } />
-            <Link to="/blog">Go Back</Link>
+            <Link to="/"><Button type="primary">Go Back</Button></Link>
             <h1>{ data.treksJson.name }</h1>
             <p>{ data.treksJson.description }</p>
         </Layout>
