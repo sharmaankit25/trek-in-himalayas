@@ -94,11 +94,15 @@ exports.createPages = ({ actions, graphql }) => {
             })
         })
 
-        res.data.allTreksJson.nodes.forEach(({ node }) => {
+        res.data.allTreksJson.nodes.forEach(({ name }) => {
+            const slug = `${string_to_slug(name)}`
             createPage({
-                path: `/treks/:slug`,
-                matchPath: `/treks/:slug`,
-                component: trekDetailsTemplate
+                path: `/treks/${slug}`,
+                matchPath: `/treks/${slug}`,
+                component: trekDetailsTemplate,
+                context: {
+                  slug
+                }
             })
         })
     })

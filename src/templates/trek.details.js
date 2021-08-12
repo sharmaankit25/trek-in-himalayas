@@ -5,13 +5,31 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { Button } from 'antd'
 
-export default function Template({ data }) {
+export default function Template(context) {
+  console.log(context)
+    const trek = context.data.treksJson
     return (
         <Layout>
-            <SEO title={ data.treksJson.name } />
+            <SEO title={ trek.name } />
             <Link to="/"><Button type="primary">Go Back</Button></Link>
-            <h1>{ data.treksJson.name }</h1>
-            <p>{ data.treksJson.description }</p>
+            <h1>{ trek.name }</h1>
+            <p>{ trek.description }</p>
+            <ul>
+              <li>Attractions : {trek.attractions} </li>
+              <li>Best Season Time : {trek.best_season_time} </li>
+              <li>State : {trek.state_name} </li>
+              <li>Summit Point : {trek.summit_point} </li>
+              <li>Time Duration : {trek.time_duration} </li>
+              <li>Difficulty Level : {trek.difficulty_level} </li>
+              <li>Max Altitude : {trek.max_altitude} </li>
+              <li>Temp Range : {trek.temp_range} Cel </li>
+              <li>Airport Name : {trek.near_airport} </li>
+              <li>Airport Distance : {trek.airport_distance} Km</li>
+              <li>Nearest Motorable Location : {trek.nearest_motorable_location} </li>
+              <li>Nearest Railway : {trek.nearest_railway} </li>
+              <li>Railway Code : {trek.railway_code} </li>
+              <li>Railway Station Distance : {trek.railway_distance} Km</li>
+            </ul>
         </Layout>
     )
 }

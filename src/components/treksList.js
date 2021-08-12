@@ -1,7 +1,6 @@
 import React from 'react'
-import Link from 'gatsby-link'
 import {navigate} from 'gatsby'
-import { Button, List, Typography, Input, Space } from 'antd'
+import { Button, List, Typography, Input } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons';
 
 
@@ -24,14 +23,14 @@ const TreksList = ({ treks }) => {
                 <Input.Search placeholder="input search text" onSearch={onSearch} enterButton />
 
             </div>}
-        renderItem={trek => (
-            <List.Item onClick={() => navigate(`treks/${trek.slug}`)} key={trek.id}>
+        renderItem={trek =>
+            (<List.Item style={{ cursor: 'pointer' }} onClick={() => navigate(`treks/${trek.slug}`, { state: {slug: trek.slug}  })} key={trek.id}>
                 <List.Item.Meta
                     title={<Typography.Text>{ trek.name }</Typography.Text>}
                 />
                 <CaretRightOutlined />
-            </List.Item>
-        )}
+            </List.Item>)
+        }
         />
 
     </div>
