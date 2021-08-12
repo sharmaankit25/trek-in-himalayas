@@ -1,42 +1,67 @@
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react"
+import Link from "gatsby-link"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { Button } from 'antd'
+import { Breadcrumb, PageHeader, Descriptions } from "antd"
 
 export default function Template(context) {
-  console.log(context)
-    const trek = context.data.treksJson
-    return (
-        <Layout>
-            <SEO title={ trek.name } />
-            <Link to="/"><Button type="primary">Go Back</Button></Link>
-            <h1>{ trek.name }</h1>
-            <p>{ trek.description }</p>
-            <ul>
-              <li>Attractions : {trek.attractions} </li>
-              <li>Best Season Time : {trek.best_season_time} </li>
-              <li>State : {trek.state_name} </li>
-              <li>Summit Point : {trek.summit_point} </li>
-              <li>Time Duration : {trek.time_duration} </li>
-              <li>Difficulty Level : {trek.difficulty_level} </li>
-              <li>Max Altitude : {trek.max_altitude} </li>
-              <li>Temp Range : {trek.temp_range} Cel </li>
-              <li>Airport Name : {trek.near_airport} </li>
-              <li>Airport Distance : {trek.airport_distance} Km</li>
-              <li>Nearest Motorable Location : {trek.nearest_motorable_location} </li>
-              <li>Nearest Railway : {trek.nearest_railway} </li>
-              <li>Railway Code : {trek.railway_code} </li>
-              <li>Railway Station Distance : {trek.railway_distance} Km</li>
-            </ul>
-        </Layout>
-    )
+  const trek = context.data.treksJson
+  return (
+    <Layout>
+      <SEO title={trek.name} />
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {trek.name}
+        </Breadcrumb.Item>
+      </Breadcrumb>
+
+      <PageHeader onBack={() => window.history.back()} title={trek.name} />
+      <p>{trek.description}</p>
+      <Descriptions size="medium" column={1}>
+        <Descriptions.Item label="State">{trek.state_name}</Descriptions.Item>
+        <Descriptions.Item label="Summit">
+          {trek.summit_point}
+        </Descriptions.Item>
+        <Descriptions.Item label="Season">
+          {trek.best_season_time}
+        </Descriptions.Item>
+        <Descriptions.Item label="Attractions">
+          {trek.attractions}
+        </Descriptions.Item>
+        <Descriptions.Item label="Duration">
+          {trek.time_duration}
+        </Descriptions.Item>
+        <Descriptions.Item label="Difficulty">
+          {trek.difficulty_level}
+        </Descriptions.Item>
+        <Descriptions.Item label="Max Altitude">
+          {trek.max_altitude}
+        </Descriptions.Item>
+        <Descriptions.Item label="Temp Range">
+          {trek.temp_range} Cel
+        </Descriptions.Item>
+        <Descriptions.Item label="Nearest Motorable Location">
+          {trek.nearest_motorable_location}
+        </Descriptions.Item>
+        <Descriptions.Item label="Airport">
+          {trek.near_airport} ({trek.airport_distance} Km)
+        </Descriptions.Item>
+        <Descriptions.Item label="Railway">
+          {trek.nearest_railway} [ {trek.railway_code} ] (
+          {trek.railway_distance} Km)
+        </Descriptions.Item>
+      </Descriptions>
+    </Layout>
+  )
 }
 
 export const trekQuery = graphql`
-query TrekJsonById($slug: String) {
-    treksJson(slug: {eq: $slug}) {
+  query TrekJsonById($slug: String) {
+    treksJson(slug: { eq: $slug }) {
       id
       name
       slug
