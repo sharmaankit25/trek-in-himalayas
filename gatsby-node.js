@@ -52,6 +52,7 @@ exports.createPages = ({ actions, graphql }) => {
                       path
                       date
                       author
+                      path
                     }
                     excerpt
                   }
@@ -89,8 +90,9 @@ exports.createPages = ({ actions, graphql }) => {
         }
         res.data.allMarkdownRemark.edges.forEach(({ node }) => {
             createPage({
-                path: node.frontmatter.path,
-                component: postTemplate
+              path: node.frontmatter.path,
+              type: node.frontmatter.type,
+              component: postTemplate
             })
         })
 

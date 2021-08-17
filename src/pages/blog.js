@@ -21,7 +21,7 @@ const BlogPage = ({ data }) => (
 
 export const pageQuery = graphql`
     query BlogIndexQuery {
-        allMarkdownRemark {
+        allMarkdownRemark(filter: {frontmatter: {type: {eq: "Blog"}}}) {
           edges {
             node {
               frontmatter {
@@ -29,6 +29,7 @@ export const pageQuery = graphql`
                 path
                 date
                 author
+                type
               }
               excerpt
             }
