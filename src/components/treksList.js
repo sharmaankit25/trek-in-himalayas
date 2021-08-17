@@ -1,32 +1,57 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { navigate } from "gatsby"
-import { Button, List, Typography, Input } from "antd"
+import { List, Typography, Input, Checkbox } from "antd"
 import { CaretRightOutlined } from "@ant-design/icons"
+
+const CheckboxGroup = Checkbox.Group
+const filterOptions = ["Beginner", "Intermediate", "Difficult"]
 
 const TreksList = ({ treks }) => {
   const [filteredTreks, setFilteredTreks] = useState(treks.nodes)
+  const [filters, setFilters] = useState({
+    search: "",
+    difficulty: filterOptions,
+    state: "",
+    season: "",
+    duration: "",
+  })
+
+  useEffect(() => {
+
+    return setFilteredTreks(prevTreks => {
+      return treks.nodes.filter(trek => {
+        if (filters.difficulty) {
+          return (filters.difficulty.includes(trek.difficulty_level))
+        }
+        return true
+      }).filter(trek => {
+        if (filters.search && filters.search.length > 2) {
+          console.log(filters.search)
+          return (
+            trek.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+            trek.state_name.toLowerCase().includes(filters.search.toLowerCase()) ||
+            trek.summit_point.toLowerCase().includes(filters.search.toLowerCase())
+          )
+        }
+        return true
+      })
+    })
+
+  }, [filters, treks.nodes])
 
   const onSearch = searchQuery => {
-    if (searchQuery && searchQuery.length > 2) {
-      return setFilteredTreks(prevTreks =>
-        prevTreks.filter(trek => {
-          return (
-            trek.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            trek.state_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            trek.summit_point.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        })
-      )
-    }
-    return setFilteredTreks(treks.nodes)
+    return setFilters(filters => ({ ...filters, search: searchQuery  }))
   }
 
-  const onInput = (e) => {
-      if (!e.target.value) {
-        return setFilteredTreks(treks.nodes)
+  const onInput = e => {
+    e.persist()
+    setTimeout(() => {
+      if (e.target && e.target.value) {
+        return setFilters(filters => ({ ...filters, search: e.target.value  }))
+      } else {
+        return setFilters(filters => ({ ...filters, search: ""  }))
       }
-
-      onSearch(e.target.value)
+    }, 1500)
   }
 
   return (
@@ -38,16 +63,24 @@ const TreksList = ({ treks }) => {
         header={
           <div>
             <Typography.Title level={4}>
-              Treks ({treks.totalCount})
+              Treks ({filteredTreks.length} / {treks.totalCount})
             </Typography.Title>
-            <Button type="primary">Filter</Button>
+            {/* <Button type="primary">Filter</Button> */}
+            <CheckboxGroup
+              options={filterOptions}
+              value={filters.difficulty}
+              onChange={list =>
+                setFilters(prevFilter => ({ ...prevFilter, difficulty: list }))
+              }
+            />
             <br />
             <br />
             <Input.Search
-              placeholder="Search by Trek Name, State"
-              onInput={onInput}
+              placeholder="Search by Trek Name, State, Summit Point"
+              onChange={onInput}
               onSearch={onSearch}
               enterButton
+              allowClear
             />
           </div>
         }
